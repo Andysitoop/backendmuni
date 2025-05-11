@@ -1,0 +1,13 @@
+package com.municipalidad.repository;
+
+import com.municipalidad.model.Ticket;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface TicketRepository extends JpaRepository<Ticket, Long> {
+    List<Ticket> findByEstadoOrderByFechaCreacionAsc(Ticket.EstadoTicket estado);
+    List<Ticket> findByTipoServicioAndEstadoOrderByFechaCreacionAsc(Ticket.TipoServicio tipoServicio, Ticket.EstadoTicket estado);
+    List<Ticket> findByAtendidoPorId(Long usuarioId);
+} 
