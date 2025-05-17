@@ -1,89 +1,146 @@
-# Sistema de Colas Municipal
+### Municipal Queue System
 
-Sistema de gestión de colas para servicios municipales desarrollado con Java Spring Boot.
+Sistema de gestión de tickets para municipalidades. Desarrollado en Java, CSS y JavaScript con backend y frontend integrados.
 
-## Requisitos
+## 📌 Tabla de Contenidos
 
-- Java 11 o superior
-- Maven 3.6 o superior
-- MySQL 8.0 o superior
-- NetBeans IDE (recomendado)
+- [Requisitos Técnicos](#-requisitos-técnicos)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Configuración Inicial](#-configuración-inicial)
+- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
+- [Despliegue](#-despliegue)
+- [Autor](#-autor)
 
-## Configuración del Proyecto
 
-1. Clonar el repositorio
-2. Configurar la base de datos MySQL:
-   - Crear una base de datos llamada `municipalidad_db`
-   - El usuario y contraseña por defecto son `root/root` (modificar en `application.properties` si es necesario)
+## ⚙️ Requisitos Técnicos
 
-3. Configurar el proyecto en NetBeans:
-   - Abrir NetBeans
-   - Seleccionar File -> Open Project
-   - Navegar hasta la carpeta del proyecto y seleccionarla
-   - Esperar a que Maven descargue las dependencias
+| Componente | Versión
+|-----|-----
+| Base de Datos | MySQL 8.0
+| Servidor | Apache Tomcat 9.0
+| JDK | 24
+| IDE | NetBeans 25
+| Conector MySQL | mysql-connector-j-9.3.0
 
-## Estructura del Proyecto
 
+> **📌 Nota:**
+
+- El nombre de la base de datos debe ser: `municipal_queue_system`.
+- Asegúrese de tener configuradas las variables de entorno de Java y Tomcat.
+
+
+
+
+## 📂 Estructura del Proyecto
+
+```plaintext
+MunicipalQueueSystem-1.0-SNAPSHOT/
+│
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── municipal/
+│   │   │           ├── controller/
+│   │   │           │   ├── AuthController.java
+│   │   │           │   ├── TicketController.java
+│   │   │           │   └── TicketJsonController.java
+│   │   │           ├── dao/
+│   │   │           │   ├── TicketDAO.java
+│   │   │           │   └── UserDAO.java
+│   │   │           ├── model/
+│   │   │           │   ├── Ticket.java
+│   │   │           │   └── User.java
+│   │   │           └── util/
+│   │   │
+│   │   └── resources/
+│   │       ├── META-INF/
+│   │       │   └── persistence.xml
+│   │       └── webapp/
+│   │           ├── META-INF/
+│   │           │   └── context.xml
+│   │           ├── WEB-INF/
+│   │           │   ├── beans.xml
+│   │           │   └── web.xml
+│   │           ├── js/
+│   │           │   └── usuario.js
+│   │           ├── admin.jsp
+│   │           ├── estado.jsp
+│   │           ├── estilos.css
+│   │           ├── login.jsp
+│   │           ├── operador.jsp
+│   │           └── usuario.jsp
+│   │
+│   └── test/
+│       └── [carpetas de pruebas]/
+│
+├── target/
+├── nb-configuration.xml
+└── pom.xml
 ```
-src/
-├── main/
-│   ├── java/
-│   │   └── com/
-│   │       └── municipalidad/
-│   │           ├── controller/
-│   │           ├── model/
-│   │           ├── repository/
-│   │           └── service/
-│   └── resources/
-│       └── application.properties
+
+## 🔧 Configuración Inicial
+
+### Base de Datos
+
+```sql
+CREATE DATABASE municipal_queue_system;
+USE municipal_queue_system;
 ```
 
-## Servicios Disponibles
+Importar el esquema SQL si existe (`schema.sql`).
 
-El sistema maneja los siguientes servicios:
-- Pago de IUSI
-- Pago de Servicio de Agua
-- Servicios de Catastro
-- Servicios de Licencias de Construcción
 
-## Endpoints API
 
-- `POST /api/tickets/crear` - Crear nuevo ticket
-- `PUT /api/tickets/{id}/atender` - Atender ticket
-- `PUT /api/tickets/{id}/finalizar` - Finalizar ticket
-- `GET /api/tickets/pendientes` - Obtener tickets pendientes
-- `GET /api/tickets/tipo/{tipoServicio}` - Obtener tickets por tipo de servicio
+## 🚀 Tecnologías Utilizadas
 
-## Ejecutar el Proyecto
+| Rol | Tecnologías
+|-----|-----
+| Backend | Java (JDK 24), JPA/Hibernate, Servlets
+| Frontend | JSP, CSS3, JavaScript
+| Base de Datos | MySQL 8.0
+| Build Tool | Maven
 
-1. En NetBeans:
-   - Click derecho en el proyecto
-   - Seleccionar "Clean and Build"
-   - Click derecho en el proyecto
-   - Seleccionar "Run"
 
-2. O desde la línea de comandos:
-   ```bash
-   mvn clean install
-   mvn spring-boot:run
-   ```
+## 📄 Descripción de Componentes
 
-## Configuración de Red
+### Controladores
 
-El sistema está diseñado para funcionar en una red con las siguientes máquinas:
-1. Servidor de Base de datos (MySQL)
-2. Máquina Cliente
-3. Servidor de Aplicación (Spring Boot)
-4. Servidor de visualización del Dashboard
+- **AuthController.java**: Gestiona la autenticación y autorización de usuarios.
+- **TicketController.java**: Maneja las operaciones CRUD para tickets.
+- **TicketJsonController.java**: API REST para operaciones con tickets en formato JSON.
 
-## Seguridad
 
-- Implementación de autenticación JWT
-- Roles de usuario (ADMIN, OPERADOR)
-- Endpoints protegidos
+### Modelos
 
-## Reportes
+- **Ticket.java**: Entidad JPA que representa un ticket en el sistema.
+- **User.java**: Entidad JPA que representa un usuario del sistema.
 
-El sistema genera los siguientes reportes:
-- Tickets atendidos agrupados por colas de trabajo
-- Dashboard de tickets atendidos por tipos de tickets 
+
+### Vistas
+
+- **login.jsp**: Página de inicio de sesión.
+- **admin.jsp**: Panel de administración.
+- **operador.jsp**: Interfaz para operadores que atienden tickets.
+- **usuario.jsp**: Interfaz para usuarios que solicitan tickets.
+- **estado.jsp**: Muestra el estado actual de los tickets.
+
+
+## ⚡ Despliegue
+
+1. Clonar repositorio:
+
+
+```shellscript
+git clone https://github.com/ulyssesRizzo/MunicipalQueueSystem.git
+```
+
+2. Importar en NetBeans como proyecto Maven.
+3. Configurar Tomcat 9.0 en el IDE.
+4. Ejecutar el proyecto desde NetBeans o desplegar el archivo WAR generado en Tomcat.
+
+
+## 👨‍💻 Autor
+
+Ulysses Torres (https://github.com/ulyssesRizzo)
+
